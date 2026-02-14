@@ -1,0 +1,41 @@
+/* styles/global.css */
+:root {
+  --bg-color: #0f172a; /* গাঢ় ব্যাকগ্রাউন্ড */
+  --card-bg: #1e293b; /* কার্ডের ব্যাকগ্রাউন্ড */
+  --primary: #3b82f6; /* নীল - প্রাইমারি অ্যাকশন */
+  --accent: #10b981; /* সবুজ - সাফল্যের জন্য */
+  --text-main: #f1f5f9; /* সাদা - প্রধান টেক্সট */
+  --text-muted: #94a3b8; /* ধূসর - সেকেন্ডারি টেক্সট */
+  --border: #334155; /* বর্ডারের রঙ */
+  --error: #ef4444; /* লাল - এরর মেসেজ */
+  --warning: #f59e0b; /* হলুদ - ওয়ার্নিং */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, sans-serif; /* সিস্টেম ফন্ট বা ইন্টার (যদি লোড করা হয়) */
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden; /* No scroll on main body */
+}
+
+#app-root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ছোট স্ক্রিনের জন্য ফন্ট সাইজ এবং প্যাডিং অ্যাডজাস্টমেন্ট */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+}

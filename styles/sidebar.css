@@ -1,0 +1,133 @@
+/* styles/sidebar.css */
+
+.sidebar {
+    width: 250px;
+    background-color: var(--card-bg);
+    border-right: 1px solid var(--border);
+    position: fixed; /* Fixed position */
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%); /* Initially hidden */
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* Ensure it's above other content */
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.sidebar.open {
+    transform: translateX(0); /* Show sidebar */
+}
+
+/* Overlay to click outside and close sidebar */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Below sidebar, above content */
+    display: none; /* Initially hidden */
+}
+
+.sidebar-overlay.open {
+    display: block; /* Show overlay when sidebar is open */
+}
+
+.sidebar-header {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+
+.sidebar-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.sidebar-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1; /* Pushes logout to bottom */
+}
+
+.sidebar-nav-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--text-main);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav-item:hover {
+    background-color: rgba(59, 130, 246, 0.2); /* Light blue hover */
+    color: var(--primary);
+}
+
+.sidebar-nav-item.active {
+    background-color: var(--primary);
+    color: white;
+    font-weight: 600;
+}
+
+.sidebar-nav-item .icon {
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+
+/* Language Toggle inside Sidebar */
+.sidebar-lang-toggle {
+    margin: 20px;
+    text-align: center;
+}
+
+.sidebar-lang-toggle button {
+    background: var(--bg-color);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 8px 15px;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%; /* Full width in sidebar */
+}
+
+.sidebar-lang-toggle button:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Logout Button */
+.sidebar-logout-btn {
+    width: calc(100% - 40px); /* Adjust for padding */
+    margin: 20px auto;
+    padding: 12px;
+    background-color: var(--error);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sidebar-logout-btn:hover {
+    background-color: #dc2626;
+}
+
+/* Responsive adjustment for sidebar */
+@media (min-width: 769px) {
+    /* If we want the sidebar to always be open on larger screens, adjust main content margin */
+    /* .dashboard-main-content.sidebar-open {
+        margin-left: 250px;
+    } */
+    /* For smaller screens, it will overlay */
+}

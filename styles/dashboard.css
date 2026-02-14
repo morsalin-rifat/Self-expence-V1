@@ -1,0 +1,220 @@
+/* styles/dashboard.css */
+
+.dashboard-layout {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background-color: var(--bg-color); /* Ensure main layout has background */
+}
+
+/* Main Content Area */
+.dashboard-main-content {
+    flex-grow: 1; /* Takes remaining space */
+    padding: 20px;
+    overflow-y: auto; /* Scrollable content */
+    background-color: var(--bg-color);
+    transition: margin-left 0.3s ease; /* For sidebar push effect on larger screens */
+}
+
+/* Header */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.hamburger-menu {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    display: flex; /* Centers the icon */
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0;
+}
+
+/* Financial Cards Grid */
+.financial-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100px; /* Ensure cards have some height */
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card-title {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+}
+
+.card-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-top: auto; /* Pushes value to bottom if title is short */
+}
+
+.card-icon {
+    font-size: 2rem;
+    color: var(--primary); /* Example color */
+    margin-bottom: 10px;
+}
+
+/* Section Header (Recent Transactions, Spending Breakdown) */
+.section-header {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 20px;
+}
+
+/* Recent Transactions List */
+.transaction-list {
+    margin-bottom: 30px;
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 10px;
+    transition: transform 0.2s ease;
+}
+
+.transaction-item:hover {
+    transform: translateX(5px);
+}
+
+.transaction-icon {
+    font-size: 1.8rem;
+    width: 40px; /* Fixed width for alignment */
+    height: 40px;
+    background-color: var(--bg-color); /* A slightly darker background for icon */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    color: var(--text-main);
+}
+
+.transaction-details {
+    flex-grow: 1;
+}
+
+.transaction-category {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.transaction-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.transaction-amount {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--error); /* Expenses usually red */
+}
+
+.transaction-amount.income {
+    color: var(--accent); /* Income usually green */
+}
+
+
+/* Spending Breakdown Chart */
+.chart-container {
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+}
+
+
+/* Floating Action Button (FAB) */
+.fab-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    font-size: 3rem;
+    line-height: 1;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    z-index: 100;
+}
+
+.fab-button:hover {
+    background-color: #2563eb;
+    transform: translateY(-3px);
+}
+
+.fab-button:active {
+    transform: scale(0.95);
+}
+
+/* Media Queries for smaller screens */
+@media (max-width: 768px) {
+    .dashboard-main-content {
+        padding: 15px;
+    }
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+    .financial-cards-grid {
+        grid-template-columns: 1fr; /* Stack cards on very small screens */
+    }
+    .fab-button {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 2.5rem;
+    }
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="bn"> <!-- Default language set to Bengali -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>দৈনিক খরচ ট্র্যাকার</title>
+
+    <!-- CSS ফাইলগুলো লোড করুন -->
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/auth.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+
+    <!-- Firebase SDKs (Compat versions via CDN) -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div id="app-root"></div> <!-- আমাদের অ্যাপের মূল রুট এলিমেন্ট -->
+
+    <!-- আপনার Firebase কনফিগারেশন এবং ইনিশিয়ালাইজেশন -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCLxjV6QYFldtIH1HAXiz-cxa22veVp-kU",
+            authDomain: "expensetrackerpwa-6b23f.firebaseapp.com",
+            projectId: "expensetrackerpwa-6b23f",
+            storageBucket: "expensetrackerpwa-6b23f.firebasestorage.app",
+            messagingSenderId: "542779197190",
+            appId: "1:542779197190:web:3abb3eacef3af93c7ac087",
+            measurementId: "G-4TSKLVWSXS"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        window.auth = firebase.auth(); // Auth অবজেক্ট গ্লোবাল করুন
+        window.db = firebase.firestore(); // Firestore অবজেক্ট গ্লোবাল করুন
+    </script>
+
+    <!-- আমাদের মূল জাভাস্ক্রিপ্ট ফাইল লোড করুন -->
+    <script src="app.js"></script>
+</body>
+</html>
+
+
+
