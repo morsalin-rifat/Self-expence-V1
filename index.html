@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn"> <!-- ডিফল্ট ভাষা বাংলা -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -13,22 +13,20 @@
     <!-- Icons -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/auth.css">
-    <link rel="stylesheet" href="styles/dashboard.css"> <!-- Dashboard styles -->
+    <!-- Styles (এই ফাইলটিতে global.css এবং auth.css এর কোড থাকবে) -->
+    <link rel="stylesheet" href="style.css"> 
+    <!-- Dashboard styles (যদি আলাদা dashboard.css থাকে) -->
+    <!-- <link rel="stylesheet" href="styles/dashboard.css"> --> 
 
-    <!-- Firebase CDN Links (Type="module" ব্যবহার না করলে compat ভার্সন ভালো কাজ করে) -->
-    <!-- তবে আমরা এখানে type="module" ব্যবহার করব, তাই Regular ভার্সন -->
+    <!-- Firebase SDK লোড করার জন্য CDN লিংক, type="module" এর সাথে কাজ করে -->
+    <!-- এটি সব JavaScript মডিউলের আগে লোড হওয়া জরুরি -->
     <script type="module">
+        // শুধু Firebase এর বেস অ্যাপ লাইব্রেরি লোড
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        // এই import গুলো global scope এ থাকবে না, তাই firebase-config.js এ import করব।
-        // এই block টি শুধু Firebase এর base libraries গুলো লোড করছে
+        // অন্যান্য Firebase সার্ভিস যেমন Auth, Firestore পরে ইম্পোর্ট করা হবে firebase-config.js এ
     </script>
 </head>
-<body>
+<body class="bangla-mode"> <!-- ডিফল্ট ভাবে বাংলা মোড অন রাখছি -->
 
     <!-- লোডিং স্পিনার -->
     <div id="app-loader" class="loader-container">
@@ -40,7 +38,7 @@
         <div class="auth-container">
             <!-- LANGUAGE TOGGLE (Right top corner) -->
             <div class="lang-switch-top">
-                <button id="langToggleAuth" class="lang-btn">🇧🇩 BN</button>
+                <button id="langToggleAuth" class="lang-btn">🇬🇧 EN</button> <!-- ডিফল্ট বাংলা, তাই বাটন EN দেখাবে -->
             </div>
 
             <!-- EMAIL VERIFICATION WARNING (Initially hidden) -->
@@ -52,7 +50,7 @@
                     <i class="ri-alert-fill"></i>
                     <span id="spam-text">মেইল না পেলে <strong>Spam</strong> বা <strong>Junk</strong> ফোল্ডার চেক করুন।</span>
                 </div>
-                <button id="btn-resend" class="btn-outline">Resend Email</button>
+                <button id="btn-resend" class="btn-outline">পুনরায় ইমেইল পাঠান</button>
                 <button id="btn-reload" class="btn-primary">আমি ভেরিফাই করেছি</button>
                 <button id="btn-logout-verify" class="btn-text">লগ আউট</button>
             </div>
@@ -128,8 +126,8 @@
     <!-- ================= DASHBOARD VIEW (লগইন এর পর দেখাবে) ================= -->
     <section id="dashboard-view" class="dashboard-wrapper hidden">
         <!-- ড্যাশবোর্ড কন্টেন্ট পরবর্তী ধাপে আসবে -->
-        <h2 style="color: white; text-align: center; margin-top: 50px;">ড্যাশবোর্ড লোডিং...</h2>
-        <button id="temp-logout" class="btn-primary" style="margin: 20px auto; display: block;">Logout (Test)</button>
+        <h2 style="color: white; text-align: center; margin-top: 50px;">ড্যাশবোর্ড লোড হচ্ছে...</h2>
+        <button id="temp-logout" class="btn-primary" style="margin: 20px auto; display: block;">লগ আউট (টেস্ট)</button>
     </section>
 
     <!-- JavaScript Modules (সঠিক অর্ডারে লোড হবে) -->

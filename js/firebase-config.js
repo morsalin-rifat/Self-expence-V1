@@ -20,4 +20,4 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // auth এবং db এক্সপোর্ট করা যাতে অন্য JS ফাইলগুলো এগুলো ব্যবহার করতে পারে
-export { auth, db };
+export { auth, db, app };

@@ -1,4 +1,5 @@
 import { auth } from './firebase-config.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getTranslation, setLanguage, applyTranslations } from './lang.js';
 import { showLoader, hideLoader, showAuthView, showDashboardView, showVerificationWarning, toggleAuthForms } from './ui.js';
 import { registerUser, loginUser, sendVerificationEmailToUser, logoutUser, refreshUserVerificationStatus } from './auth-service.js';
@@ -14,13 +15,13 @@ const langToggleAuthBtn = document.getElementById('langToggleAuth');
 const btnResend = document.getElementById('btn-resend');
 const btnReload = document.getElementById('btn-reload');
 const btnLogoutVerify = document.getElementById('btn-logout-verify');
-const dashboardLogoutBtn = document.getElementById('temp-logout'); // এখানে নামকরণ পরিবর্তন করা হয়েছে
+const dashboardLogoutBtn = document.getElementById('temp-logout'); // নামকরণ ঠিক করা হয়েছে
 
 // ১. অ্যাপ শুরু করা এবং লোডার দেখানো
 showLoader();
 
 // ২. অথেনটিকেশন স্টেট লিসেনার
-firebase.auth().onAuthStateChanged(async (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (user) {
     console.log("User logged in:", user.email);
     if (user.emailVerified) {
@@ -89,7 +90,7 @@ btnResend.addEventListener('click', async () => {
   if (user) {
     try {
       await sendVerificationEmailToUser(user);
-      alert(`${getTranslation('resendError')} ${getTranslation('spamAlert')}`);
+      alert(`${getTranslation('resendEmail')} ${getTranslation('spamAlert')}`);
       console.log("Verification email re-sent.");
     } catch (error) {
       alert(`${getTranslation('resendError')} ${error.message}`);

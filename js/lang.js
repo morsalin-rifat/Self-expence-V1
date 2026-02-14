@@ -135,6 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (savedLang) {
     setLanguage(savedLang);
   } else {
-    applyTranslations(); // প্রথমবার লোড হলে ডিফল্ট বাংলা টেক্সট দেখাবে
+    setLanguage('bn'); // ডিফল্ট বাংলা
   }
 });
