@@ -1,139 +1,344 @@
-/* styles/auth.css */
+.auth-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* ভিডিওর ব্যাকগ্রাউন্ডের সাথে মিলিয়ে */
+}
+
 .auth-container {
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
+    background-color: var(--card-bg-light); /* সাদা কার্ডের ব্যাকগ্রাউন্ড */
+    border-radius: 20px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    position: relative;
+    overflow: hidden;
+    width: 90%; /* মোবাইল ফ্রেন্ডলি */
+    max-width: 768px; /* ডেস্কটপে এতটুকুতেই সীমাবদ্ধ থাকবে */
+    min-height: 500px;
+    display: flex; /* ফর্মগুলোকে পাশে রাখতে */
+    flex-direction: column; /* মোবাইলে একটার নিচে আরেকটা */
+    align-items: center;
+    padding: 20px;
+    color: var(--text-dark); /* কার্ডের ভেতরের টেক্সট ডার্ক হবে */
+
+    /* মোবাইলে ভাষা বাটন কার্ডের বাইরে থাকবে */
+    position: relative; 
+    top: 0;
+    left: 0;
 }
 
-.auth-card {
-  background-color: var(--card-bg);
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
-  border: 1px solid var(--border);
-  position: relative; /* ভাষা টগলের জন্য */
-  text-align: center;
+.lang-switch-top {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 20; /* Overlay এর উপর থাকবে */
+}
+.lang-btn {
+    background: rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.1);
+    color: var(--text-dark);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+.lang-btn:hover { background: rgba(0,0,0,0.2); }
+
+
+/* ফর্ম কন্টেইনার */
+.form-panel-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* মোবাইলে ফর্ম একটার নিচে আরেকটা */
+    align-items: center;
+    min-height: 460px; /* ফর্মের জন্য মিনিমাম হাইট */
 }
 
-/* Language Toggle Button */
-.lang-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: var(--bg-color);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: 0.3s;
-  z-index: 10; /* নিশ্চিত করতে উপরে থাকবে */
+
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    background-color: var(--card-bg-light); /* সাদা ব্যাকগ্রাউন্ড */
 }
 
-.lang-toggle:hover {
-  color: var(--primary);
-  border-color: var(--primary);
+.form-container form {
+    background-color: var(--card-bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 20px;
+    height: 100%;
+    text-align: center;
+    width: 100%; /* মোবাইলে পুরো উইডথ নেবে */
 }
 
-.auth-card h2 {
-  margin-top: 0;
-  color: var(--text-main);
-  font-weight: 700;
-}
-
-.auth-card p {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
+.form-title { font-size: 28px; margin-bottom: 10px; }
 
 .input-group {
-  margin-bottom: 15px;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    margin: 8px 0;
+    padding: 0 10px;
+    width: 100%;
+    max-width: 300px; /* ইনপুট ফিল্ডের ম্যাক্স উইডথ */
 }
 
-.input-field {
-  width: 100%;
-  padding: 14px;
-  background-color: var(--bg-color);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text-main);
-  font-size: 1rem;
-  box-sizing: border-box;
-  transition: 0.3s;
+.input-group input {
+    background-color: #eee;
+    border: none;
+    padding: 12px 8px;
+    width: 100%;
+    font-size: 14px;
+    color: var(--text-dark);
+    outline: none;
+}
+.input-group i {
+    color: var(--text-muted);
+    margin-right: 5px;
+    font-size: 16px;
 }
 
-.input-field:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+.social-login { margin: 15px 0; }
+.social-icon {
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    height: 40px;
+    width: 40px;
+    color: var(--text-dark);
+    font-size: 20px;
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+.social-icon:hover { transform: scale(1.1); color: var(--primary-color); border-color: var(--primary-color); }
+
+.or-separator {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 10px 0;
 }
 
-.submit-btn {
-  width: 100%;
-  padding: 14px;
-  background-color: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: 0.3s;
+.forgot-pass-link {
+    color: var(--text-muted);
+    font-size: 13px;
+    text-decoration: none;
+    margin: 10px 0 20px;
+    transition: color 0.2s;
+}
+.forgot-pass-link:hover { color: var(--primary-color); }
+
+.btn-action {
+    background: var(--primary-gradient);
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 12px 45px;
+    border-radius: 25px;
+    border: 1px solid transparent; /* ট্রান্সপারেন্ট বর্ডার */
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 75, 31, 0.3);
+}
+.btn-action:active { transform: scale(0.95); }
+.btn-action:focus { outline: none; }
+
+
+/* OVERLAY PANEL (The "Purple" section in the video) */
+.overlay-panel {
+    background: var(--secondary-gradient); /* ভিডিওর ল্যাভেন্ডার ইফেক্টের জন্য */
+    color: #FFFFFF;
+    position: absolute;
+    top: 0;
+    left: 0; /* মোবাইলে বামে থাকবে */
+    width: 100%; /* মোবাইলে পুরো উইডথ নেবে */
+    height: 200px; /* মোবাইলে ফর্মের উপরে থাকবে */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    text-align: center;
+    transform: translateY(0); /* মোবাইলে উপরের দিকে স্লাইড */
+    transition: transform 0.6s ease-in-out;
+    border-radius: 20px 20px 0 0; /* মোবাইলে উপরের দিকে রাউন্ডেড */
+    z-index: 10; /* ফর্মের উপরে থাকবে */
 }
 
-.submit-btn:hover {
-  background-color: #2563eb;
-}
+.overlay-panel h2 { font-size: 24px; margin-bottom: 10px; }
+.overlay-panel p { font-size: 14px; line-height: 20px; letter-spacing: 0.5px; margin-bottom: 20px; }
 
-.submit-btn:disabled {
-  background-color: var(--border);
-  cursor: not-allowed;
+.ghost-btn {
+    background-color: transparent;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 30px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
 }
-
-.toggle-text {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-}
-
-.toggle-link {
-  color: var(--primary);
-  cursor: pointer;
-  font-weight: 600;
-  margin-left: 5px;
-}
-
-.error-msg, .success-msg {
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  margin-bottom: 15px;
-  display: block;
-  text-align: left;
-}
-
-.error-msg {
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid var(--error);
-  color: var(--error);
-}
-
-.success-msg {
-  background-color: rgba(16, 185, 129, 0.1);
-  border: 1px solid var(--accent);
-  color: var(--accent);
+.ghost-btn:hover {
+    background-color: rgba(255,255,255,0.2);
 }
 
 
-/* Animations */
-.fade-in {
-  animation: fadeIn 0.4s ease-out;
+/* INITIAL STATE FOR SLIDING (Login is default) */
+.sign-up-container {
+    transform: translateY(100%); /* সাইন আপ ফর্ম নিচে লুকানো থাকবে */
+    opacity: 0;
+    z-index: 1;
+}
+.sign-in-container {
+    transform: translateY(200px); /* লগইন ফর্ম ওভারলের নিচে থাকবে */
+    z-index: 5;
+}
+.overlay-panel {
+    transform: translateY(0); /* ওভারলে প্যানেল উপরেই থাকবে */
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+
+/* ACTIVE STATE: When 'right-panel-active' class is added to auth-container */
+/* This is controlled by JS to make panels slide */
+.auth-container.right-panel-active .sign-in-container {
+    transform: translateY(0); /* লগইন ফর্ম উপরে উঠে আসবে */
+    z-index: 5; /* লগইন ফর্মকে উপরে রাখো */
+}
+.auth-container.right-panel-active .sign-up-container {
+    transform: translateY(-200px); /* সাইন আপ ফর্ম উপরে উঠে আসবে */
+    opacity: 1; /* দেখা যাবে */
+    z-index: 6; /* সাইন আপ ফর্মকে উপরে রাখো */
+}
+.auth-container.right-panel-active .overlay-panel {
+    transform: translateY(200%); /* ওভারলে প্যানেল নিচে স্লাইড করবে */
+    border-radius: 0 0 20px 20px; /* রাউন্ডেড বটম */
+}
+
+
+/* ============ VERIFICATION WARNING BOX STYLE ============ */
+.verification-box {
+    background: rgba(255, 59, 48, 0.1); /* লালচে আভা */
+    border: 1px solid rgba(255, 59, 48, 0.3);
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px; /* লগইন ফর্মের সমান বা কম */
+    text-align: center;
+    color: var(--danger);
+}
+.verification-box h3 { color: var(--primary-color); margin-bottom: 10px; }
+.verification-box p { color: var(--text-dark); margin-bottom: 15px; font-size: 14px; }
+
+.spam-alert {
+    background: rgba(255, 204, 0, 0.1);
+    color: var(--warning);
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+}
+.verification-box .btn-primary { margin-top: 15px; }
+.verification-box .btn-text { margin-top: 5px; }
+
+
+/* DESKTOP VIEW ADJUSTMENTS (For video-like side-by-side forms) */
+@media (min-width: 768px) {
+    .auth-container {
+        flex-direction: row; /* ডেস্কটপে পাশাপাশি ফর্ম */
+        min-height: 480px;
+        max-width: 900px; /* বড় স্ক্রিনে আরেকটু চওড়া */
+    }
+    .form-panel-wrapper {
+        flex-direction: row;
+        width: 100%;
+        min-height: auto;
+    }
+
+    .form-container {
+        position: absolute;
+        width: 50%; /* অর্ধেক উইডথ */
+        height: 100%;
+        padding: 0 40px;
+    }
+
+    .sign-in-container {
+        left: 0;
+        transform: translateX(0); /* বাম দিকে স্থির */
+        z-index: 5;
+    }
+    .sign-up-container {
+        left: 0;
+        transform: translateX(0); /* বাম দিকে স্থির */
+        opacity: 1;
+        z-index: 1;
+    }
+
+    .overlay-panel {
+        left: 50%; /* মাঝখানে */
+        width: 50%; /* অর্ধেক উইডথ */
+        height: 100%; /* পুরো হাইট */
+        border-radius: 0 20px 20px 0; /* ডান পাশে রাউন্ডেড */
+        transform: translateX(0); /* মাঝখানে স্থির */
+    }
+    .overlay-left, .overlay-right {
+        position: absolute;
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 40px;
+        transition: transform 0.6s ease-in-out;
+    }
+    .overlay-right { right: 0; transform: translateX(0); }
+    .overlay-left { left: 0; transform: translateX(0); }
+
+
+    /* DESKTOP ACTIVE STATE */
+    .auth-container.right-panel-active .sign-in-container {
+        transform: translateX(100%); /* লগইন ফর্ম ডানে স্লাইড করবে */
+    }
+    .auth-container.right-panel-active .sign-up-container {
+        transform: translateX(100%); /* সাইন আপ ফর্মও ডানে স্লাইড করবে (লগইন এর উপর) */
+        opacity: 1;
+        z-index: 5; /* সাইন আপ সামনে আসবে */
+    }
+    .auth-container.right-panel-active .overlay-panel {
+        transform: translateX(-100%); /* ওভারলে বামে স্লাইড করবে */
+        border-radius: 20px 0 0 20px; /* বাম পাশে রাউন্ডেড */
+    }
+    .auth-container.right-panel-active .overlay-right {
+        transform: translateX(20%); /* টেক্সট একটু স্লাইড করবে */
+    }
+    .auth-container.right-panel-active .overlay-left {
+        transform: translateX(0); /* এটা সামনে চলে আসবে */
+    }
 }

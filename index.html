@@ -1,45 +1,142 @@
 <!DOCTYPE html>
-<html lang="bn"> <!-- Default language set to Bengali -->
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>দৈনিক খরচ ট্র্যাকার</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Expensify BD</title>
+    
+    <!-- Google Fonts: বাংলা (Hind Siliguri) ও ইংরেজি (Outfit) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
-    <!-- CSS ফাইলগুলো লোড করুন -->
+    <!-- Styles -->
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/auth.css">
-    <link rel="stylesheet" href="styles/dashboard.css">
-    <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/dashboard.css"> <!-- Dashboard styles -->
 
-    <!-- Firebase SDKs (Compat versions via CDN) -->
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore-compat.js"></script>
+    <!-- Firebase CDN Links (Type="module" ব্যবহার না করলে compat ভার্সন ভালো কাজ করে) -->
+    <!-- তবে আমরা এখানে type="module" ব্যবহার করব, তাই Regular ভার্সন -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        // এই import গুলো global scope এ থাকবে না, তাই firebase-config.js এ import করব।
+        // এই block টি শুধু Firebase এর base libraries গুলো লোড করছে
+    </script>
 </head>
 <body>
-    <div id="app-root"></div> <!-- আমাদের অ্যাপের মূল রুট এলিমেন্ট -->
 
-    <!-- আপনার Firebase কনফিগারেশন এবং ইনিশিয়ালাইজেশন -->
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCLxjV6QYFldtIH1HAXiz-cxa22veVp-kU",
-            authDomain: "expensetrackerpwa-6b23f.firebaseapp.com",
-            projectId: "expensetrackerpwa-6b23f",
-            storageBucket: "expensetrackerpwa-6b23f.firebasestorage.app",
-            messagingSenderId: "542779197190",
-            appId: "1:542779197190:web:3abb3eacef3af93c7ac087",
-            measurementId: "G-4TSKLVWSXS"
-        };
+    <!-- লোডিং স্পিনার -->
+    <div id="app-loader" class="loader-container">
+        <div class="spinner"></div>
+    </div>
 
-        const app = firebase.initializeApp(firebaseConfig);
-        window.auth = firebase.auth(); // Auth অবজেক্ট গ্লোবাল করুন
-        window.db = firebase.firestore(); // Firestore অবজেক্ট গ্লোবাল করুন
-    </script>
+    <!-- ================= AUTH VIEW (Login/Signup/Verification) ================= -->
+    <section id="auth-view" class="auth-wrapper hidden">
+        <div class="auth-container">
+            <!-- LANGUAGE TOGGLE (Right top corner) -->
+            <div class="lang-switch-top">
+                <button id="langToggleAuth" class="lang-btn">🇧🇩 BN</button>
+            </div>
 
-    <!-- আমাদের মূল জাভাস্ক্রিপ্ট ফাইল লোড করুন -->
-    <script src="app.js"></script>
+            <!-- EMAIL VERIFICATION WARNING (Initially hidden) -->
+            <div id="verification-warning" class="hidden verification-box">
+                <i class="ri-mail-send-line icon-lg"></i>
+                <h3 id="verify-title">ইমেইল ভেরিফিকেশন প্রয়োজন</h3>
+                <p id="verify-desc">আমরা আপনার ইমেইলে একটি ভেরিফিকেশন লিংক পাঠিয়েছি। দয়া করে আপনার ইনবক্স চেক করুন।</p>
+                <div class="spam-alert">
+                    <i class="ri-alert-fill"></i>
+                    <span id="spam-text">মেইল না পেলে <strong>Spam</strong> বা <strong>Junk</strong> ফোল্ডার চেক করুন।</span>
+                </div>
+                <button id="btn-resend" class="btn-outline">Resend Email</button>
+                <button id="btn-reload" class="btn-primary">আমি ভেরিফাই করেছি</button>
+                <button id="btn-logout-verify" class="btn-text">লগ আউট</button>
+            </div>
+
+
+            <!-- VIDEO-LIKE SLIDING PANEL -->
+            <div class="form-panel-wrapper">
+                <!-- Overlay Panel (The purple part in the video) -->
+                <div class="overlay-panel">
+                    <div class="overlay-left">
+                        <h2 id="overlay-welcome-title">স্বাগতম!</h2>
+                        <p id="overlay-welcome-desc">আপনার অ্যাকাউন্টে লগইন করতে ইমেইল এবং পাসওয়ার্ড দিন।</p>
+                        <button class="ghost-btn" id="signIn">লগইন</button>
+                    </div>
+                    <div class="overlay-right">
+                        <h2 id="overlay-hello-title">নতুন ইউজার?</h2>
+                        <p id="overlay-hello-desc">মাত্র কয়েক ধাপে একটি অ্যাকাউন্ট খুলে আপনার আর্থিক যাত্রা শুরু করুন।</p>
+                        <button class="ghost-btn" id="signUp">সাইন আপ</button>
+                    </div>
+                </div>
+
+                <!-- Sign In Form Panel -->
+                <div class="form-container sign-in-container">
+                    <form id="login-form">
+                        <h1 class="form-title gradient-text">লগইন</h1>
+                        <div class="social-login">
+                            <a href="#" class="social-icon"><i class="ri-google-fill"></i></a>
+                            <!-- <a href="#" class="social-icon"><i class="ri-facebook-fill"></i></a> -->
+                        </div>
+                        <span class="or-separator">অথবা ইমেইল ব্যবহার করুন</span>
+                        <div class="input-group">
+                            <i class="ri-mail-line"></i>
+                            <input type="email" id="login-email" placeholder="ইমেইল" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="ri-lock-2-line"></i>
+                            <input type="password" id="login-pass" placeholder="পাসওয়ার্ড" required>
+                        </div>
+                        <a href="#" class="forgot-pass-link">পাসওয়ার্ড ভুলে গেছেন?</a>
+                        <button type="submit" class="btn-action">লগইন করুন</button>
+                    </form>
+                </div>
+
+                <!-- Sign Up Form Panel -->
+                <div class="form-container sign-up-container">
+                    <form id="signup-form">
+                        <h1 class="form-title gradient-text">সাইন আপ</h1>
+                        <div class="social-login">
+                            <a href="#" class="social-icon"><i class="ri-google-fill"></i></a>
+                            <!-- <a href="#" class="social-icon"><i class="ri-facebook-fill"></i></a> -->
+                        </div>
+                        <span class="or-separator">অথবা ইমেইল ব্যবহার করুন</span>
+                        <div class="input-group">
+                            <i class="ri-user-line"></i>
+                            <input type="text" id="reg-name" placeholder="আপনার পুরো নাম" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="ri-mail-line"></i>
+                            <input type="email" id="reg-email" placeholder="ইমেইল" required>
+                        </div>
+                        <div class="input-group">
+                            <i class="ri-lock-2-line"></i>
+                            <input type="password" id="reg-pass" placeholder="পাসওয়ার্ড (৬+ অক্ষর)" required>
+                        </div>
+                        <button type="submit" class="btn-action">অ্যাকাউন্ট খুলুন</button>
+                    </form>
+                </div>
+            </div> <!-- End of form-panel-wrapper -->
+
+        </div> <!-- End of auth-container -->
+    </section>
+
+    <!-- ================= DASHBOARD VIEW (লগইন এর পর দেখাবে) ================= -->
+    <section id="dashboard-view" class="dashboard-wrapper hidden">
+        <!-- ড্যাশবোর্ড কন্টেন্ট পরবর্তী ধাপে আসবে -->
+        <h2 style="color: white; text-align: center; margin-top: 50px;">ড্যাশবোর্ড লোডিং...</h2>
+        <button id="temp-logout" class="btn-primary" style="margin: 20px auto; display: block;">Logout (Test)</button>
+    </section>
+
+    <!-- JavaScript Modules (সঠিক অর্ডারে লোড হবে) -->
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/lang.js"></script>
+    <script type="module" src="js/ui.js"></script>
+    <script type="module" src="js/auth-service.js"></script>
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
-
-
-

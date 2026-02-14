@@ -1,41 +1,119 @@
-/* styles/global.css */
+/* GLOBAL CSS থেকে */
 :root {
-  --bg-color: #0f172a; /* গাঢ় ব্যাকগ্রাউন্ড */
-  --card-bg: #1e293b; /* কার্ডের ব্যাকগ্রাউন্ড */
-  --primary: #3b82f6; /* নীল - প্রাইমারি অ্যাকশন */
-  --accent: #10b981; /* সবুজ - সাফল্যের জন্য */
-  --text-main: #f1f5f9; /* সাদা - প্রধান টেক্সট */
-  --text-muted: #94a3b8; /* ধূসর - সেকেন্ডারি টেক্সট */
-  --border: #334155; /* বর্ডারের রঙ */
-  --error: #ef4444; /* লাল - এরর মেসেজ */
-  --warning: #f59e0b; /* হলুদ - ওয়ার্নিং */
+    /* কালার প্যালেট (ভিডিও অনুযায়ী, Dark Mode Default) */
+    --bg-dark: #1a1a1e;       /* একদম গাঢ় ব্যাকগ্রাউন্ড */
+    --card-bg-light: #ffffff; /* লগইন কার্ডের সাদা অংশ */
+    --card-bg-dark: #2a2a30;  /* ড্যাশবোর্ডের ডার্ক কার্ড */
+    --card-border: rgba(255, 255, 255, 0.1);
+    
+    /* অ্যাকসেন্ট কালার (Red-Orange Gradient) */
+    --primary-gradient: linear-gradient(135deg, #ff4b1f 0%, #ff9068 100%);
+    --primary-color: #ff4b1f;
+    --secondary-color: #6C63FF; /* ভিডিওর ল্যাভেন্ডার টাইপের জন্য */
+    --secondary-gradient: linear-gradient(135deg, #6C63FF, #4834d4);
+
+    --text-main: #ffffff;
+    --text-dark: #333333;
+    --text-muted: #a0a0a0;
+    --danger: #ff3b30;
+    --success: #34c759;
+    --warning: #ffcc00;
+
+    /* ফন্ট */
+    --font-en: 'Outfit', sans-serif;
+    --font-bn: 'Hind Siliguri', sans-serif;
+}
+
+/* বেসিক রিসেট */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-en); /* ডিফল্ট ইংলিশ */
+}
+
+/* বাংলা মোড অন হলে বডিতে এই ক্লাস যোগ হবে */
+body.bangla-mode * {
+    font-family: var(--font-bn) !important;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', system-ui, sans-serif; /* সিস্টেম ফন্ট বা ইন্টার (যদি লোড করা হয়) */
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  box-sizing: border-box;
-  overflow: hidden; /* No scroll on main body */
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    overflow: hidden; /* পুরো পেজের ওভারফ্লো বন্ধ */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#app-root {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* ইউটিলিটি ক্লাস */
+.hidden { display: none !important; }
+.gradient-text {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
 }
 
-/* ছোট স্ক্রিনের জন্য ফন্ট সাইজ এবং প্যাডিং অ্যাডজাস্টমেন্ট */
-@media (max-width: 600px) {
-  body {
-    padding: 10px;
-  }
+/* বাটন স্টাইল */
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(255, 75, 31, 0.3);
 }
+.btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(255, 75, 31, 0.4);
+}
+.btn-primary:active { transform: scale(0.96); }
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--text-main);
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-outline:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.btn-text {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.btn-text:hover {
+    color: var(--primary-color);
+}
+
+/* লোডার */
+.loader-container {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+.spinner {
+    width: 40px; height: 40px;
+    border: 4px solid rgba(255,255,255,0.1);
+    border-left-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
